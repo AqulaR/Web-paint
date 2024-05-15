@@ -94,6 +94,7 @@ colorInput.addEventListener("change", (event) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   colorInput.value = "black";
+  sizeInput.value = 20;
 });
 
 function setColor(e) {
