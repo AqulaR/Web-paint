@@ -18,6 +18,7 @@ body {
   width: 100%;
   color: var(--text);
   scroll-margin-top: 200px;
+  overflow: hidden;
 }
 .screen {
   display: flex;

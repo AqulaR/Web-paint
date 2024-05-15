@@ -884,6 +884,7 @@ const ongoingTouches = [];
 function handleStart(evt) {
   evt.preventDefault();
   // log("touchstart.");
+  canvas.getBoundingClientRect();
   drawingT = true;
   colorP == 0 ? (color = colorInput.value) : (color = colorP);
 
