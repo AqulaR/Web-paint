@@ -34,6 +34,7 @@ body {
   border: 2px solid var(--border);
   overflow: auto;
   justify-content: space-between;
+  /* overflow: hidden; */
 }
 
 .tool-bar {
@@ -502,7 +503,7 @@ input[type=number] {
 @media (height <= 700px) {
 
   .tool-bar {
-    height: 99vh;
+    height: 60vh;
     overflow-y: scroll;
     flex-wrap: nowrap;
     display: flex;
