@@ -727,10 +727,10 @@ function draw_quadratic_curve(path, ctx, color, thickness, fill_color) {
 
 function roll_dwn(el) {
   let target = document.getElementById(el.dataset.target);
-  // console.log(target);
   target.classList.toggle("roll_show");
-  // console.log(target.classList.toggle("roll_show"));
-  // target.style.display == "flex" ? target.style.display == "none" : target.style.display == "flex";
+  if (parseInt(window.innerHeight) <= 700) {
+    document.getElementById("tool-bar").scrollLeft += 120;
+  }
 }
 
 // let sliderEl = document.querySelector(".inprldwn");
