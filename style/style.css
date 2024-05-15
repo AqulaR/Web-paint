@@ -475,31 +475,57 @@ input[type=number] {
   }
 
   #rd_size {
-    top: 530px;
-    flex-direction: row;
-    width: 200px;
-    height: 50px;
-    left: 80px;
-    justify-content: space-between;
-    padding: 0 10px 0 60px;
+    top: 410px;
+    left: 120px;
   }
-
-  #size-input {
-    transform: rotate(90deg);
-  }
-}
-
-@media (width <= 650px) {
+  
   .tool-bar-bottom {
     flex-direction: column-reverse;
     justify-content: center;
-    align-items: center;
-    padding-bottom: 10px;
+    align-items: flex-end;
+  }
+
+  .options-bar-bottom {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #scale-input {
+    display: none;
+  }
+
+  #sizeP {
+    transform: rotate(-90deg);
   }
 }
 
-@media (width <= 360px) {
-  .inpscale {
-    display: none;
+@media (height <= 700px) {
+
+  .tool-bar {
+    height: 99vh;
+    overflow-y: scroll;
+    flex-wrap: nowrap;
+    display: flex;
+    transform-origin: top;
+    transition: all 0.3s ease-in-out;
+  }
+
+  #whiteWH {
+    flex-direction: column !important;
+    width: 120px;
+  }
+
+  .main-options {
+    position: relative;
+  }
+
+  #rd_size {
+    width: 100px;
   }
 }
+/* 
+@media (width <= 360px) {
+  #scale-input {
+    display: none;
+  }
+} */
