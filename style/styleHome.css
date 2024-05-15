@@ -1,0 +1,281 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+body {
+    background: url(../imgs/background.png) center center no-repeat;
+}
+
+.main_wrapper {
+    width: 1378px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.nav_h {
+    color: #fff;
+    font-size: 80px;
+}
+
+.fs-40 {
+    font-size: 40px;
+}
+
+.fs-28 {
+    font-size: 28px;
+}
+
+.fs-22 {
+    font-size: 22px;
+}
+
+@media (width <= 1378px) {
+    .main_wrapper {
+        width: 98%;
+    }
+
+    body {
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    .fs-40 {
+        font-size: 28px;
+    }
+    
+    .fs-28 {
+        font-size: 24px;
+    }
+    
+    .fs-22 {
+        font-size: 18px;
+    }
+
+}
+
+@media (width <= 1035px) {
+    .nav_h {
+        font-size: 50px;
+    }
+
+    .fs-40 {
+        font-size: 24px;
+    }
+    
+    .fs-28 {
+        font-size: 22px;
+    }
+    
+    .fs-22 {
+        font-size: 16px;
+    }
+}
+
+@media (width <= 560px) {
+    .fs-40 {
+        font-size: 24px;
+    }
+    
+    .fs-28 {
+        font-size: 22px;
+    }
+    
+    .fs-22 {
+        font-size: 18px;
+    }
+}
+
+@media (width <= 420px) {
+    .nav_h {
+        font-size: 40px;
+    }
+
+    .fs-40 {
+        font-size: 22px;
+    }
+    
+    .fs-28 {
+        font-size: 20px;
+    }
+    
+    .fs-22 {
+        font-size: 14px;
+    }
+}
+
+/* navigation */
+
+.navigation {
+    row-gap: 11px;
+}
+
+.nav_big_block {
+    /* background-color: #908dff; */
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 545px;
+    height: 280px;
+    border-radius: 24px;
+    padding: 50px 30px;
+    color: #fff;
+}
+
+.nav_sml_block {
+    background-color: #908dff;
+    width: 267px;
+    height: 280px;
+    border-radius: 24px;
+    padding: 70px 30px 20px;
+}
+
+/* .navigation_h2 {
+} */
+
+.navigation_h3 {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navigation_addition_text {
+    color: #d9d5c9;
+    text-decoration: none;
+}
+
+.sml_blck_img {
+    width: 40px;
+    height: 40px;
+}
+
+.statement_blck_img {
+    width: 55px;
+    height: 55px;
+}
+
+.non_a {
+    text-decoration: none;
+}
+
+.blue_background {
+    padding: 180px 0;
+    background: linear-gradient(0.2turn, #5551ff, #9391fe);
+}
+
+.copyright {
+    margin: 0 auto;
+    color: #5551ff;
+}
+
+@media (width <= 1378px) {
+    .nav_sml_block {
+        width: 32.5%;
+    }
+
+    .nav_big_block:nth-child(1) {
+        width: 32.5%;
+
+    }
+
+    .big_block_princ {
+        width: 66%;
+    }
+
+    .main_wrapper {
+        height: auto;
+    }
+}
+
+@media (width <= 900px) {
+    .nav_sml_block {
+        width: 32.5%;
+        height: 206px;
+        padding: 35px;
+    }
+
+    .nav_big_block {
+        height: 206px;
+        padding: 20px;
+    }
+
+    .nav_big_block:nth-child(1) {
+        width: 32.5%;
+    }
+
+    .big_block_princ {
+        width: 66%;
+    }
+
+    .main_wrapper {
+        height: 100vh;
+    }
+}
+
+@media (width <= 555px) {
+    .nav_sml_block {
+        background-color: #908dff;
+        width: 49%;
+        height: 206px;
+        border-radius: 24px;
+        padding: 35px;
+    }
+
+    .nav_big_block:nth-child(1) {
+        width: 100%;
+    }
+
+    .git_repo_card{
+        order: 1;
+    }
+
+    .start_pr_btn {
+        order: 2;
+    }
+
+    .nav_big_block {
+        height: 206px;
+        padding: 20px;
+    }
+
+    .big_block_princ {
+        width: 100%;
+    }
+    .main_wrapper {
+        height: auto;
+    }
+    
+    .nav_big_block {
+        /* background-color: rgba(0, 0, 0, 0.1); */
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+@media (width <= 450px) {
+    .navigation {
+        row-gap: 7px;
+    }
+
+    .nav_sml_block {
+        background-color: #908dff;
+        width: 49%;
+        height: 176px;
+        border-radius: 24px;
+        padding: 20px;
+    }
+
+    .sml_blck_img_soc {
+        height: 70%;
+    }
+
+    .nav_big_block {
+        height: 176px;
+        padding: 20px;
+    }
+}
