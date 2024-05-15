@@ -418,6 +418,10 @@ input[type=number] {
 }
 
 @media (width <= 650px) {
+  #figure {
+    display: none;
+  }
+  
   .options-bar {
     padding: 10px;
     flex-direction: column;
@@ -481,14 +485,19 @@ input[type=number] {
   }
   
   .tool-bar-bottom {
-    flex-direction: column-reverse;
-    justify-content: center;
-    align-items: flex-end;
+    /* flex-direction: column-reverse; */
+    /* justify-content: center; */
+    /* align-items: flex-end; */
+  }
+
+  .operation {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .options-bar-bottom {
-    flex-direction: column;
-    gap: 10px;
+    gap: 15px;
   }
 
   #scale-input {
@@ -500,7 +509,7 @@ input[type=number] {
   }
 }
 
-@media (height <= 700px) {
+@media (height <= 700px) AND  (width <= 650px) {
 
   .tool-bar {
     height: 60vh;

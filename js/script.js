@@ -19,6 +19,7 @@ let stroke = false;
 let scale = 1;
 // Other
 let drawing = false;
+let drawingT = false;
 let changesArray = [];
 let changesPosition = -1;
 const changesArrayLimit = 15;
@@ -48,9 +49,11 @@ let colorP = 0;
 
 // Normal canvas
 // Mobile
-canvas.addEventListener("touchstart", drawStart);
-canvas.addEventListener("touchmove", draw);
-canvas.addEventListener("touchend", drawEnd);
+// canvas.addEventListener("touchstart", drawStart);
+// canvas.addEventListener("touchmove", draw);
+// canvas.addEventListener("touchcancel", draw);
+// canvas.addEventListener("touchend", drawEnd);
+
 // Desktop
 canvas.addEventListener("mousedown", drawStart);
 canvas.addEventListener("mousemove", draw);
@@ -58,9 +61,9 @@ canvas.addEventListener("mouseup", drawEnd);
 canvas.addEventListener("mouseout", drawEnd);
 // Canvas mask
 // Mobile
-canvasMask.addEventListener("touchstart", drawStart);
-canvasMask.addEventListener("touchmove", draw);
-canvasMask.addEventListener("touchend", drawEnd);
+// canvasMask.addEventListener("touchstart", drawStart);
+// canvasMask.addEventListener("touchmove", draw);
+// canvasMask.addEventListener("touchend", drawEnd);
 // Desktop
 canvasMask.addEventListener("mousedown", drawStart);
 canvasMask.addEventListener("mousemove", draw);
@@ -69,18 +72,16 @@ canvasMask.addEventListener("mouseout", drawEnd);
 
 // Functions
 
-function rgbToHex(col)
-{
-  if(col.charAt(0)=='r')
-  {
-    col=col.replace('rgb(','').replace(')','').split(',');
-    var r=parseInt(col[0], 10).toString(16);
-    var g=parseInt(col[1], 10).toString(16);
-    var b=parseInt(col[2], 10).toString(16);
-    r=r.length==1?'0'+r:r;
-    g=g.length==1?'0'+g:g;
-    b=b.length==1?'0'+b:b;
-    var colHex='#'+r+g+b;
+function rgbToHex(col) {
+  if (col.charAt(0) == "r") {
+    col = col.replace("rgb(", "").replace(")", "").split(",");
+    var r = parseInt(col[0], 10).toString(16);
+    var g = parseInt(col[1], 10).toString(16);
+    var b = parseInt(col[2], 10).toString(16);
+    r = r.length == 1 ? "0" + r : r;
+    g = g.length == 1 ? "0" + g : g;
+    b = b.length == 1 ? "0" + b : b;
+    var colHex = "#" + r + g + b;
     return colHex;
   }
 }
@@ -104,14 +105,16 @@ function setColor(e) {
 function changeWH() {
   let inpw = document.getElementById("w-input").value;
   let inph = document.getElementById("h-input").value;
-  
+
   divcanvas.style.minWidth = `${parseInt(inpw) * scale.toFixed(2)}px`;
   divcanvas.style.minHeight = `${parseInt(inph) * scale.toFixed(2)}px`;
 
   canvas = document.getElementById("canvas");
   rect = canvas.getBoundingClientRect();
 
-  document.getElementById("sizewh_dwn").innerHTML = `${parseInt(divcanvas.style.minWidth)} x ${parseInt(divcanvas.style.minHeight)} пикс.`;
+  document.getElementById("sizewh_dwn").innerHTML = `${parseInt(
+    divcanvas.style.minWidth
+  )} x ${parseInt(divcanvas.style.minHeight)} пикс.`;
 
   resizediv.style.width = `${(parseInt(inpw) + 10) * scale.toFixed(2)}px`;
   resizediv.style.height = `${(parseInt(inph) + 12) * scale.toFixed(2)}px`;
@@ -131,43 +134,35 @@ function resize_canvas(e) {
   // divcanvas.style.minHeight = `${el_height + 20}px`
   // divcanvas.style.minWidth = `${el_width + 20}px`
 
-  divcanvas.style.minHeight = `${parseInt(resizediv.style.height) * scale.toFixed(2)}px`;
-  divcanvas.style.minWidth = `${parseInt(resizediv.style.width) * scale.toFixed(2)}px`;
-  
+  divcanvas.style.minHeight = `${
+    parseInt(resizediv.style.height) * scale.toFixed(2)
+  }px`;
+  divcanvas.style.minWidth = `${
+    parseInt(resizediv.style.width) * scale.toFixed(2)
+  }px`;
+
   canvas = document.getElementById("canvas");
   rect = canvas.getBoundingClientRect();
 
   document.getElementById("w-input").value = parseInt(divcanvas.style.minWidth);
-  document.getElementById("h-input").value = parseInt(divcanvas.style.minHeight);
+  document.getElementById("h-input").value = parseInt(
+    divcanvas.style.minHeight
+  );
 
-  document.getElementById("sizewh_dwn").innerHTML = `${parseInt(divcanvas.style.minWidth)} x ${parseInt(divcanvas.style.minHeight)} пикс.`;
+  document.getElementById("sizewh_dwn").innerHTML = `${parseInt(
+    divcanvas.style.minWidth
+  )} x ${parseInt(divcanvas.style.minHeight)} пикс.`;
 
   resizeFix(el_width, el_height);
 }
 
 function drawStart(e) {
+  colorP == 0 ? (color = colorInput.value) : (color = colorP);
+
   drawing = true;
-  // mousePos.xDown = e.clientX - rect.left;
-  // mousePos.yDown = e.clientY - rect.top;
   mousePos.xDown = (e.clientX - rect.left) / scale;
   mousePos.yDown = (e.clientY - rect.top) / scale;
-  // mousePos.xDown = e.x - canvas.offsetLeft;
-  //   = e.y - canvas.offsetTop;
-  // console.log(mousePos.xDown);
 
-  // console.log(
-  //   `Позиция курсора: x=${e.clientX - rect.left}, y=${
-  //     e.clientY - rect.top
-  //   }, scale = ${scale}`
-  // );
-  // console.log(
-  //   `Позиция курсора new: x=${(e.clientX - rect.left) / scale}, y=${
-  //     (e.clientY - rect.top) / scale
-  //   }`
-  // );
-
-  colorP == 0 ? color = colorInput.value : color = colorP;
-  
   ctx.strokeStyle = color;
   ctx.fillStyle = color;
   ctxMask.strokeStyle = color;
@@ -189,19 +184,20 @@ function drawStart(e) {
       ctx.lineWidth = size;
       break;
     case TOOLS.FILL:
-      // console.log(e.x, e.y);
-      flood_fill(e.x, e.y, hexToRgba(color));
+      // console.log(mousePos.xDown, mousePos.yDown);
+      flood_fill(mousePos.xDown, mousePos.yDown, hexToRgba(color));
       break;
   }
   draw(e);
 }
 
 function draw(e) {
-  ctxMask.clearRect(0, 0, canvasMask.width, canvasMask.height); // Clears the mask
+  ctxMask.clearRect(0, 0, canvasMask.width, canvasMask.height);
   // const rect = canvas.getBoundingClientRect();
   mousePos.x = (e.clientX - rect.left) / scale;
   mousePos.y = (e.clientY - rect.top) / scale;
   if (drawing) {
+    console.log("Fsd");
     const w = mousePos.x - mousePos.xDown;
     const h = mousePos.y - mousePos.yDown;
     switch (tool) {
@@ -228,6 +224,8 @@ function draw(e) {
       case TOOLS.LINE:
         ctxMask.strokeStyle = color;
         ctxMask.beginPath();
+        console.log("moveTo", mousePos.xDown, mousePos.yDown);
+        console.log("lineTo", mousePos.x, mousePos.y);
         ctxMask.moveTo(mousePos.xDown, mousePos.yDown);
         ctxMask.lineTo(mousePos.x, mousePos.y);
         ctxMask.stroke();
@@ -311,7 +309,7 @@ function drawEnd(e) {
           mousePos.yDown,
           mousePos.x - mousePos.xDown,
           mousePos.y - mousePos.yDown
-        )
+        );
         break;
       case TOOLS.CIRCLE:
         ctx.beginPath();
@@ -374,7 +372,7 @@ function drawEnd(e) {
       changesArray.splice(0, 1);
     } else {
       changesPosition++;
-    };
+    }
   }
 }
 
@@ -549,7 +547,10 @@ options.forEach((op) => {
 // fast flood /////////////////////////////////////////////////////////////////
 
 function flood_fill(original_x, original_y, color) {
-  const original_color = getColor(original_x - canvas.offsetLeft, original_y - canvas.offsetTop);
+  const original_color = getColor(
+    original_x - canvas.offsetLeft,
+    original_y - canvas.offsetTop
+  );
   const new_color = {
     r: original_color[0],
     g: original_color[1],
@@ -559,12 +560,7 @@ function flood_fill(original_x, original_y, color) {
 
   let x = original_x;
   let y = original_y;
-  let boundary_pixels = ctx.getImageData(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
+  let boundary_pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
   // first we go up until we find a boundary
   let linear_cords = (y * canvas.width + x) * 4;
@@ -687,8 +683,18 @@ function flood_fill(original_x, original_y, color) {
 }
 
 function draw_quadratic_curve(path, ctx, color, thickness, fill_color) {
-  color = "rgba( " + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
-  fill_color = "rgba( " + fill_color.r + "," + fill_color.g + "," + fill_color.b + "," + fill_color.a + ")";
+  color =
+    "rgba( " + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
+  fill_color =
+    "rgba( " +
+    fill_color.r +
+    "," +
+    fill_color.g +
+    "," +
+    fill_color.b +
+    "," +
+    fill_color.a +
+    ")";
   ctx.strokeStyle = color;
   ctx.fillStyle = fill_color;
   ctx.lineWidth = thickness;
@@ -737,80 +743,99 @@ function roll_dwn(el) {
 
 document.getElementById("size-input").addEventListener("input", (event) => {
   document.getElementById("size_text").innerHTML = `${event.target.value}px`;
-})
+});
 
-window.onclick = function(event) {
-  if (!event.target.matches('.roll_down') && !event.target.matches('.roll_dwn_con') && !event.target.matches('.inprldwn')) {
+window.onclick = function (event) {
+  if (
+    !event.target.matches(".roll_down") &&
+    !event.target.matches(".roll_dwn_con") &&
+    !event.target.matches(".inprldwn")
+  ) {
     let dropdowns = document.getElementsByClassName("roll_dwn_con");
     for (let i = 0; i < dropdowns.length; i++) {
-      if (dropdowns[i].classList.contains('roll_show')) {
-        dropdowns[i].classList.remove('roll_show');
+      if (dropdowns[i].classList.contains("roll_show")) {
+        dropdowns[i].classList.remove("roll_show");
       }
     }
   }
-}
-
+};
 
 // scaling
 
 function resize(e) {
-  if (scale.toFixed(2) > 0.1 && scale < 3 || (e == "+" && scale.toFixed(2) == 0.1) || (e == "-" && scale.toFixed(2) == 3.0)) {
+  if (
+    (scale.toFixed(2) > 0.1 && scale < 3) ||
+    (e == "+" && scale.toFixed(2) == 0.1) ||
+    (e == "-" && scale.toFixed(2) == 3.0)
+  ) {
     e == "+" ? (scale += 0.1) : (scale -= 0.1);
-  
+
     resizediv.style.transform = `scale(${scale.toFixed(2)})`;
     resizediv.style["-o-transform"] = `scale(${scale.toFixed(2)})`;
     resizediv.style["-webkit-transform"] = `scale(${scale.toFixed(2)})`;
     resizediv.style["-moz-transform"] = `scale(${scale.toFixed(2)})`;
-  
-    // console.log(divcanvas.offsetWidth * scale, divcanvas.offsetHeight * scale); 
+
+    // console.log(divcanvas.offsetWidth * scale, divcanvas.offsetHeight * scale);
     // divcanvas.style.width = `${resizediv.offsetWidth * scale + 100}px`;
     // divcanvas.style.height = `${resizediv.offsetHeight * scale + 50}px`;
     // console.log(e);
-  
+
     // divcanvas.style.transform = `scale(${scale.toFixed(2)})`;
     // divcanvas.style["-o-transform"] = `scale(${scale.toFixed(2)})`;
     // divcanvas.style["-webkit-transform"] = `scale(${scale.toFixed(2)})`;
     // divcanvas.style["-moz-transform"] = `scale(${scale.toFixed(2)})`;
-  
-    divcanvas.style.minHeight = `${parseInt(resizediv.style.height) * scale.toFixed(2)}px`;
-    divcanvas.style.minWidth = `${parseInt(resizediv.style.width) * scale.toFixed(2)}px`;
-  
-    
+
+    divcanvas.style.minHeight = `${
+      parseInt(resizediv.style.height) * scale.toFixed(2)
+    }px`;
+    divcanvas.style.minWidth = `${
+      parseInt(resizediv.style.width) * scale.toFixed(2)
+    }px`;
+
     canvas = document.getElementById("canvas");
     rect = canvas.getBoundingClientRect();
-  
-    document.getElementById("first_opt_scale").innerHTML = `${Math.round(scale * 100)}% &#9660;`;
+
+    document.getElementById("first_opt_scale").innerHTML = `${Math.round(
+      scale * 100
+    )}% &#9660;`;
     document.querySelector("#scale-input").value = Math.round(scale * 100);
-    
+
     document.getElementById("scale_select").value = "nan";
   } else {
     console.log("out of range, ", scale.toFixed(2));
   }
 }
 
-
 document.querySelector("#scale-input").addEventListener("input", (event) => {
-  document.getElementById("first_opt_scale").innerHTML = `${event.target.value}% &#9660;`
-  scale = Number(event.target.value/100);
+  document.getElementById(
+    "first_opt_scale"
+  ).innerHTML = `${event.target.value}% &#9660;`;
+  scale = Number(event.target.value / 100);
   // console.log(Number(event.target.value/100));
   resizediv.style.transform = `scale(${scale.toFixed(2)})`;
   resizediv.style["-o-transform"] = `scale(${scale.toFixed(2)})`;
   resizediv.style["-webkit-transform"] = `scale(${scale.toFixed(2)})`;
   resizediv.style["-moz-transform"] = `scale(${scale.toFixed(2)})`;
 
-  divcanvas.style.minHeight = `${parseInt(resizediv.style.height) * scale.toFixed(2)}px`;
-  divcanvas.style.minWidth = `${parseInt(resizediv.style.width) * scale.toFixed(2)}px`;
+  divcanvas.style.minHeight = `${
+    parseInt(resizediv.style.height) * scale.toFixed(2)
+  }px`;
+  divcanvas.style.minWidth = `${
+    parseInt(resizediv.style.width) * scale.toFixed(2)
+  }px`;
 
   canvas = document.getElementById("canvas");
   rect = canvas.getBoundingClientRect();
 
   document.getElementById("scale_select").value = "nan";
-})
+});
 
 function updateScaleNum(el) {
   if (el.value != "nan") {
     let val = el.value;
-    document.getElementById("first_opt_scale").innerHTML = `${val * 100}% &#9660;`;
+    document.getElementById("first_opt_scale").innerHTML = `${
+      val * 100
+    }% &#9660;`;
     document.querySelector("#scale-input").value = val * 100;
     scale = Number(val);
     // console.log(Number(val));
@@ -818,10 +843,14 @@ function updateScaleNum(el) {
     resizediv.style["-o-transform"] = `scale(${scale.toFixed(2)})`;
     resizediv.style["-webkit-transform"] = `scale(${scale.toFixed(2)})`;
     resizediv.style["-moz-transform"] = `scale(${scale.toFixed(2)})`;
-  
-    divcanvas.style.minHeight = `${parseInt(resizediv.style.height) * scale.toFixed(2)}px`;
-    divcanvas.style.minWidth = `${parseInt(resizediv.style.width) * scale.toFixed(2)}px`;
-  
+
+    divcanvas.style.minHeight = `${
+      parseInt(resizediv.style.height) * scale.toFixed(2)
+    }px`;
+    divcanvas.style.minWidth = `${
+      parseInt(resizediv.style.width) * scale.toFixed(2)
+    }px`;
+
     canvas = document.getElementById("canvas");
     rect = canvas.getBoundingClientRect();
   }
@@ -831,10 +860,280 @@ function scrollFix() {
   let el_width = parseInt(resizediv.style.width) - 10;
   let el_height = parseInt(resizediv.style.height) - 12;
 
-  resizeFix(el_width, el_height)
+  resizeFix(el_width, el_height);
 }
 
 function open_palette() {
   document.getElementById("color-input").click();
   console.log(document.getElementById("color-input"));
+}
+
+// mozilla for touch
+
+canvas.addEventListener("touchstart", handleStart);
+canvas.addEventListener("touchmove", handleMove);
+canvas.addEventListener("touchend", handleEnd);
+// canvas.addEventListener("touchcancel", handleCancel);
+
+canvasMask.addEventListener("touchstart", handleStart);
+canvasMask.addEventListener("touchmove", handleMove);
+canvasMask.addEventListener("touchend", handleEnd);
+
+const ongoingTouches = [];
+
+function handleStart(evt) {
+  evt.preventDefault();
+  // log("touchstart.");
+  drawingT = true;
+  colorP == 0 ? (color = colorInput.value) : (color = colorP);
+
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctxMask.strokeStyle = color;
+  size = sizeInput.value;
+  
+  const touches = evt.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    ongoingTouches.push(copyTouch(touches[i]));
+    // ctx.beginPath();
+    // ctx.arc((touches[i].clientX - rect.left) / scale, (touches[i].clientY - rect.top) / scale, 4, 0, 2 * Math.PI, false);
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    // ctx.fill();
+    switch (tool) {
+      case TOOLS.BRUSH:
+      case TOOLS.HIGHLIGHTER:
+      case TOOLS.ERASER:
+        ongoingTouches.push(copyTouch(touches[i]));
+        ctx.beginPath();
+        ctx.moveTo(
+          (touches[i].clientX - rect.left) / scale,
+          (touches[i].clientY - rect.top) / scale,
+          // 4,
+          // 0,
+          // 2 * Math.PI,
+          // false
+        );
+      // ctx.moveTo(mousePos.xDown, mousePos.yDown);
+      case TOOLS.CIRCLE:
+      case TOOLS.SQUARE:
+      case TOOLS.CIRCLEF:
+      case TOOLS.SQUAREF:
+      case TOOLS.TRIANGLE:
+      case TOOLS.TRIANGLEF:
+      case TOOLS.LINE:
+        ctx.lineWidth = size;
+        break;
+      case TOOLS.FILL:
+        // console.log((touches[i].clientX - rect.left) / scale, (touches[i].clientY - rect.top) / scale);
+        flood_fill(
+          (touches[i].clientX - rect.left) / scale,
+          (touches[i].clientY - rect.top) / scale,
+          hexToRgba(color)
+        );
+        break;
+    }
+  }
+
+  handleMove(evt);
+}
+
+function handleMove(evt) {
+  // evt.preventDefault();
+  ctxMask.clearRect(0, 0, canvasMask.width, canvasMask.height);
+
+  // const el = document.getElementById("canvas");
+  // const ctx = el.getContext("2d");
+  const touches = evt.changedTouches;
+  
+  for (let i = 0; i < touches.length; i++) {
+    // const color = colorForTouch(touches[i]);
+    const idx = ongoingTouchIndexById(touches[i].identifier);
+    
+    let touchPosX = (ongoingTouches[0].pageX - rect.left) / scale;
+    let touchPosY = (ongoingTouches[0].pageY - rect.top) / scale;
+    
+    if (idx >= 0) {
+      // console.log("sda");
+      // ctx.beginPath();
+      // ctx.moveTo(
+      //   (ongoingTouches[idx].pageX - rect.left) / scale,
+      //   (ongoingTouches[idx].pageY - rect.top) / scale
+      // );
+      // ctx.lineTo(
+      //   (touches[i].clientX - rect.left) / scale,
+      //   (touches[i].clientY - rect.top) / scale
+      // );
+      // ctx.lineWidth = size;
+      // ctx.strokeStyle = color;
+      // ctx.stroke();
+
+      if (drawingT) {
+        const w = (ongoingTouches[idx].pageX - rect.left) / scale - (touches[i].clientX - rect.left) / scale;
+        const h = (ongoingTouches[idx].pageY - rect.top) / scale - (touches[i].clientY - rect.top) / scale;
+        switch (tool) {
+          case TOOLS.ERASER:
+            ctx.strokeStyle = "white";
+          case TOOLS.BRUSH:
+            ctx.lineTo((touches[i].clientX - rect.left) / scale, (touches[i].clientY - rect.top) / scale);
+            ctx.lineCap = "round";
+            ctx.lineJoin = "round";
+            ctx.stroke();
+            ctx.strokeStyle = color;
+            break;
+          case TOOLS.HIGHLIGHTER:
+            ctx.globalAlpha = 0.01;
+            ctx.strokeStyle = color;
+            // console.log(color + "01");
+            ctx.lineTo((touches[i].clientX - rect.left) / scale, (touches[i].clientY - rect.top) / scale);
+            ctx.lineCap = "round";
+            ctx.lineJoin = "round";
+            ctx.stroke();
+            ctx.strokeStyle = color;
+            ctx.globalAlpha = 1;
+            break;
+          // case TOOLS.LINE:
+          //   // console.log("sda");
+          //   ctxMask.strokeStyle = color;
+          //   ctxMask.beginPath();
+          //   console.log("lineTo:", touchPosX, touchPosY);
+          //   console.log("moveTo:", (ongoingTouches[idx].pageX - rect.left) / scale, (ongoingTouches[idx].pageY - rect.top) / scale);
+          //   ctxMask.lineTo((ongoingTouches[idx].pageX - rect.left) / scale, (ongoingTouches[idx].pageY - rect.top) / scale);
+          //   ctxMask.moveTo((touches[i].clientX - rect.left) / scale, (touches[i].clientY - rect.top) / scale);
+          //   ctxMask.stroke();
+          //   ctxMask.closePath();
+          //   break;
+          // case TOOLS.SQUARE:
+          //   ctxMask.strokeStyle = color;
+          //   ctxMask.strokeRect(mousePos.xDown, mousePos.yDown, w, h);
+          //   break;
+          // case TOOLS.CIRCLE:
+          //   ctxMask.strokeStyle = color;
+          //   ctxMask.beginPath();
+          //   ctxMask.ellipse(
+          //     mousePos.xDown + w / 2,
+          //     mousePos.yDown + h / 2,
+          //     Math.abs(w / 2),
+          //     Math.abs(h / 2),
+          //     0,
+          //     0,
+          //     Math.PI * 2
+          //   );
+          //   ctxMask.stroke();
+          //   ctxMask.closePath();
+          //   break;
+          // case TOOLS.SQUAREF:
+          //   ctxMask.fillStyle = color;
+          //   ctxMask.fillRect(mousePos.xDown, mousePos.yDown, w, h);
+          //   break;
+          // case TOOLS.CIRCLEF:
+          //   ctxMask.fillStyle = color;
+          //   ctxMask.beginPath();
+          //   ctxMask.ellipse(
+          //     mousePos.xDown + w / 2,
+          //     mousePos.yDown + h / 2,
+          //     Math.abs(w / 2),
+          //     Math.abs(h / 2),
+          //     0,
+          //     0,
+          //     Math.PI * 2
+          //   );
+          //   ctxMask.fill();
+          //   ctxMask.closePath();
+          //   break;
+          // case TOOLS.TRIANGLE:
+          //   ctxMask.strokeStyle = color;
+          //   ctxMask.beginPath();
+          //   ctxMask.moveTo(mousePos.xDown, mousePos.yDown);
+          //   ctxMask.lineTo(mousePos.x, mousePos.y);
+          //   ctxMask.lineTo(mousePos.xDown * 2 - mousePos.x, mousePos.y);
+          //   ctxMask.closePath();
+          //   ctxMask.stroke();
+          //   break;
+          // case TOOLS.TRIANGLEF:
+          //   ctxMask.fillStyle = color;
+          //   ctxMask.beginPath();
+          //   ctxMask.moveTo(mousePos.xDown, mousePos.yDown);
+          //   ctxMask.lineTo(mousePos.x, mousePos.y);
+          //   ctxMask.lineTo(mousePos.xDown * 2 - mousePos.x, mousePos.y);
+          //   ctxMask.closePath();
+          //   ctxMask.fill();
+          //   break;
+        }
+      }
+    } else {
+      log("can't figure out which touch to continue");
+    }
+    ongoingTouches.splice(idx, 1, copyTouch(touches[i]));
+  }
+}
+
+function handleEnd(evt) {
+  evt.preventDefault();
+  // log("touchend");
+  // const el = document.getElementById("canvas");
+  // const ctx = el.getContext("2d");
+  const touches = evt.changedTouches;
+
+  // for (let i = 0; i < touches.length; i++) {
+  //   // const color = colorForTouch(touches[i]);
+  //   let idx = ongoingTouchIndexById(touches[i].identifier);
+
+  //   if (idx >= 0) {
+  //     // ctx.lineWidth = size;
+  //     ctx.fillStyle = color;
+  //     ctx.beginPath();
+  //     ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
+  //     ctx.lineTo(touches[i].pageX, touches[i].pageY);
+  //     ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8); // and a square at the end
+  //     ongoingTouches.splice(idx, 1); // remove it; we're done
+
+  //   } else {
+  //     log("can't figure out which touch to end");
+  //   }
+  // }
+}
+
+function handleCancel(evt) {
+  evt.preventDefault();
+  log("touchcancel.");
+  const touches = evt.changedTouches;
+
+  for (let i = 0; i < touches.length; i++) {
+    let idx = ongoingTouchIndexById(touches[i].identifier);
+    ongoingTouches.splice(idx, 1); // remove it; we're done
+  }
+}
+
+// function colorForTouch(touch) {
+//   let r = touch.identifier % 16;
+//   let g = Math.floor(touch.identifier / 3) % 16;
+//   let b = Math.floor(touch.identifier / 7) % 16;
+//   r = r.toString(16); // make it a hex digit
+//   g = g.toString(16); // make it a hex digit
+//   b = b.toString(16); // make it a hex digit
+//   const color = `#${r}${g}${b}`;
+//   return color;
+// }
+
+function copyTouch({ identifier, pageX, pageY }) {
+  return { identifier, pageX, pageY };
+}
+
+function ongoingTouchIndexById(idToFind) {
+  for (let i = 0; i < ongoingTouches.length; i++) {
+    const id = ongoingTouches[i].identifier;
+    // console.log("id: ", id, "tofind:", idToFind);
+    if (id === idToFind) {
+      return i;
+    }
+  }
+  return -1; // not found
+}
+
+function log(msg) {
+  // const container = document.getElementById("log");
+  // container.textContent = `${msg} \n${container.textContent}`;
+  // console.log(msg);
 }
