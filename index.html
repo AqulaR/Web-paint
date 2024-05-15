@@ -1,188 +1,121 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Paint</title>
-  <link rel="stylesheet" href="./style/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/x-icon" href="icon.ico">
-</head>
-<body>
-  <div class="screen">
-    <div class="workspace" onscroll="scrollFix()">
-      <div class="tool-bar" id="tool-bar">
-        <div class="options-bar">
-          <div class="main-options">
-            <!-- <div class="opt_outer" id="self_dwn">
-              <div class="setting setting-size area-size">
-                <input type="image" src="./icons/size.svg" class="roll_down" onclick="roll_dwn(this)" data-target="whiteWH">
-                <div class="roll_dwn_con wh_con" id="whiteWH">
-                  <input class="inprldwn" id="w-input" type="number" value="500" min="1"/>
-                  <input class="inprldwn" id="h-input" type="number" value="700" min="1"/>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Web Paint - легко быстро и удобно</title>
+        <link rel="stylesheet" href="./style/styleHome.css" />
+        <link rel="stylesheet" href="./style/bootstrap.min.css" />
+        <link rel="icon" type="image/x-icon" href="icon.ico">
+    </head>
+    <body class="badi d-flex flex-column pb-2">
+        <div class="main_wrapper pt-5 pb-5">
+            <div class="navigation d-flex flex-wrap justify-content-between">
+                <div class="nav_big_block d-flex flex-column">
+                    <span class="navigation_h2 mt-5 fs-40">Web Paint</span>
+                    <div
+                        class="navigation_addition_text"
+                    >
+                        <span class="fs-22">Всё для вашего комфорта</span>
                 </div>
-              </div>
-              <span>Масштаб</span>
-            </div> -->
-            <!-- <span class="hline"></span> -->
-            <div class="opt_outer" id="opt_dwn">
-              <div class="f_con">
-                <div class="setting setting-size area-size">
-                  <input id="sizeWH" type="image" src="./icons/sizeWH.png" class="roll_down" onclick="roll_dwn(this)" data-target="whiteWH">
-                  <div class="roll_dwn_con wh_con" id="whiteWH">
-                    <div class="wh_con_col">
-                      <span class="wh_text">Ширина</span>
-                      <input class="inprldwn" id="w-input" type="number" value="500" min="1" onchange="changeWH()"/>
+                </div>
+                <div
+                    class="nav_sml_block d-flex flex-column align-items-center"
+                >
+                    <span class="non_a d-flex align-items-center justify-content-center">
+                        <img src="./imgs/logo.png" class="sml_blck_img_soc" alt="logo" />
+                    </span>
+                </div>
+                <div class="nav_sml_block d-flex flex-column justify-content-between">
+                    <span class="nav_h">v 1.0</span>
+                    <span class="navigation_addition_text">
+                        Последняя
+                    </span>
+                    <a
+                        href="https://github.com/AqulaR/practice-15-06-2024/releases/"
+                        class="d-flex align-items-center justify-content-between non_a"
+                    >
+                        <span class="navigation_h3 fs-28">Версия</span>
+                        <img src="./imgs/arrow_right.png" alt="стрелка" />
+                    </a>
+                </div>
+                <div
+                    class="nav_sml_block d-flex flex-column align-items-center git_repo_card"
+                >
+                    <a href="https://aqular.github.io/practice-15-06-2024/" class="non_a d-flex align-items-center justify-content-center">
+                        <img src="./imgs/git_repo.png" class="sml_blck_img_soc" alt="Git репозиторий" />
+                    </a>
+                </div>
+                <div
+                    class="nav_sml_block d-flex flex-column align-items-center"
+                >
+                    <a href="https://web.telegram.org" class="non_a d-flex align-items-center justify-content-center">
+                        <img src="./imgs/tg.png" class="sml_blck_img_soc" alt="Мы в телеграмме" />
+                    </a>
+                </div>
+                <div
+                    class="nav_sml_block d-flex flex-column align-items-center"
+                >
+                    <a href="https://vk.com" class="non_a d-flex align-items-center justify-content-center">
+                        <img src="./imgs/vk.png" class="sml_blck_img_soc" alt="Мы в вконтакте" />
+                    </a>
+                </div>
+                <div
+                    class="nav_big_block d-flex flex-column justify-content-between gap-4 big_block_princ"
+                >
+                    <span class="navigation_addition_text">
+                        Наши принципы
+                    </span>
+                    <div
+                        class="our_statements d-flex justify-content-around mb-4"
+                    >
+                        <div
+                            class="statement d-flex flex-column gap-2 align-items-center"
+                        >
+                            <img
+                                src="./imgs/fast.png"
+                                alt="web"
+                                class="statement_blck_img"
+                            />
+                            <span class="statement_text fs-22">Быстро</span>
+                        </div>
+                        <div
+                            class="statement d-flex flex-column gap-2 align-items-center"
+                        >
+                            <img
+                                src="./imgs/easy.png"
+                                alt="web"
+                                class="statement_blck_img"
+                            />
+                            <span class="statement_text fs-22">Просто</span>
+                        </div>
+                        <div
+                            class="statement d-flex flex-column gap-2 align-items-center"
+                        >
+                            <img
+                                src="./imgs/udobno.png"
+                                alt="web"
+                                class="statement_blck_img"
+                            />
+                            <span class="statement_text fs-22">Удобно</span>
+                        </div>
                     </div>
-                    <span>X</span>
-                    <div class="wh_con_col">
-                      <span class="wh_text">Высота</span>
-                      <input class="inprldwn" id="h-input" type="number" value="700" min="1" onchange="changeWH()"/>
-                    </div>
-                  </div>
                 </div>
-                <div class="options_con">
-                  <div class="option" onclick="saveImage();">
-                    <img src="icons/download.svg" alt="download" />
-                  </div>
-                  <div class="option" onclick="clearCanvas();">
-                    <img src="icons/clear.svg" alt="clear" />
-                  </div>
-                  <div class="option" onclick="undo();">
-                    <img src="icons/undo.svg" alt="undo" />
-                  </div>
-                  <div class="option" onclick="redo();">
-                    <img src="icons/redo.svg" alt="redo" />
-                  </div>
+                <div class="nav_sml_block d-flex flex-column start_pr_btn">
+                    <span class="navigation_addition_text mt-4">
+                        Попробуйте уже сейчас
+                    </span>
+                    <a
+                        class="d-flex align-items-center justify-content-between non_a cursor-pointer"
+                        data-target="signup"
+                        href="./redactor.html"
+                    >
+                        <span class="navigation_h3 fs-28">Начать</span>
+                        <img src="./imgs/arrow_right.png" alt="Плюсы" />
+                    </a>
                 </div>
-              </div>
-              <span>Настройки</span>
             </div>
-            <span class="hline"></span>
-            <div class="opt_outer" id="opt_dwn">
-              <div class="options_con">
-                <input type="image" class="option selected" src="./icons/brush.svg" alt="" onclick="changeTool(TOOLS.BRUSH)">
-                <input type="image" class="option" src="./icons/highlighter.svg" alt="" onclick="changeTool(TOOLS.HIGHLIGHTER)">
-                <input type="image" class="option" src="./icons/eraser.svg" alt="" onclick="changeTool(TOOLS.ERASER)">
-                <input type="image" class="option" src="./icons/fill.svg" alt="" onclick="changeTool(TOOLS.FILL)">
-              </div>
-              <span>Рисование</span>
-            </div>
-            <span class="hline"></span>
-            <div class="opt_outer" id="opt_dwn">
-              <div class="options_con" id="figure">
-                <input type="image" class="option" src="./icons/line.svg" alt="" onclick="changeTool(TOOLS.LINE)">
-                <input type="image" class="option" src="./icons/square.svg" alt="" onclick="changeTool(TOOLS.SQUARE)">
-                <input type="image" class="option" src="./icons/circle.svg" alt="" onclick="changeTool(TOOLS.CIRCLE)">
-                <input type="image" class="option" src="./icons/trianglef.svg" alt="" onclick="changeTool(TOOLS.TRIANGLE)">
-                <input type="image" class="option" src="./icons/squareF.svg" alt="" onclick="changeTool(TOOLS.SQUAREF)">
-                <input type="image" class="option" src="./icons/circleF.svg" alt="" onclick="changeTool(TOOLS.CIRCLEF)">
-                <input type="image" class="option" src="./icons/triangle.svg" alt="" onclick="changeTool(TOOLS.TRIANGLEF)">
-              </div>
-              <span>Фигуры</span>
-            </div>
-            <span class="hline"></span>
-            <div class="opt_outer" id="self_dwn">
-              <div class="setting setting-size">
-                <!-- <button class="roll_down" onclick="roll_dwn(this)" data-target="rd_size">
-                  <img src="icons/size.svg" alt="size"/>s
-                </button> -->
-                <input id="sizeP" type="image" src="./icons/size.svg" class="roll_down" onclick="roll_dwn(this)" data-target="rd_size">
-                <div class="roll_dwn_con" id="rd_size">
-                  <input class="inprldwn" id="size-input" type="range" orient="vertical" value="20" min="1" max="80"/>
-                  <span class="size_text" id="size_text">20px</span>
-                </div>
-              </div>
-              <span>Размер</span>
-            </div>
-            <span class="hline"></span>
-            <div class="opt_outer" id="self_dwn">
-              <div class="setting setting-color">
-                <span class="color_now" id="color_now"></span>
-                <div class="colors">
-                  <span class="color_sel" style="background-color: #000000;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #FF0000;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #FF4500;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #FFA500;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #FFFF00;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #32CD32;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #0000FF;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #FFFFFF;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #F08080;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #FFA07A;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #FED8B1;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #FFFFE0;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #90EE90;" onclick="setColor(this)"></span>
-                  <span class="color_sel" style="background-color: #ADD8E6;" onclick="setColor(this)"></span>
-                </div>
-                <input id="color-input" type="color" style="display: none;"/>
-                <input type="image" src="./icons/colorize.svg" class="pallete" onclick="open_palette()">
-              </div>
-              <span>Цвет</span>
-            </div>
-            <!-- <div class="setting setting-stroke">
-              <span>Stroke</span>
-              <input id="stroke-input" type="checkbox" />
-            </div> -->
-          </div>
         </div>
-        <!-- <div class="other-options">
-          <div class="option option-nohighlight option-download" onclick="saveImage();">
-            <img src="icons/download.svg" alt="download" />
-          </div>
-          <div class="option option-nohighlight option-upload" onclick="loadImage();">
-            <img src="icons/upload.svg" alt="upload" />
-          </div>
-          <div class="option option-nohighlight option-clear" onclick="clearCanvas();">
-            <img src="icons/clear.svg" alt="clear" />
-          </div>
-          <div class="option option-nohighlight option-undo" onclick="undo();">
-            <img src="icons/undo.svg" alt="undo" />
-          </div>
-          <div class="option option-nohighlight option-redo" onclick="redo();">
-            <img src="icons/redo.svg" alt="redo" />
-          </div>
-        </div> -->
-      </div>
-      <div class="canvas" id="canvasdiv" style="min-height: 700px; min-width: 500px;">
-        <div class="resize" id="resizediv" style="width: 500px; height: 700px;" onmouseup="resize_canvas(this)">
-          <canvas id="canvas"></canvas>
-          <canvas id="canvas-mask"></canvas>
-        </div>
-      </div>
-      <div class="tool-bar-bottom">
-        <div class="scale_wh_num">
-          <img src="./icons/sizewhb.png">
-          <span id="sizewh_dwn">
-            500 x 700 пикс.
-          </span>
-        </div>
-        <div class="options-bar-bottom">
-          <div class="scale_select_con">
-            <div class="scale_select_placeholder" id="first_opt_scale" data-text="Выбранный тип аккаунта: ">100% &#9660;</div>
-            <select id="scale_select" class="scale_select" onchange="updateScaleNum(this)">
-              <option value="nan" selected deactivated>Sizes:</option>
-              <option value="3.0">300%</option>
-              <option value="2.0">200%</option>
-              <option value="1.5">150%</option>
-              <option value="1">100%</option>
-              <option value="0.75">75%</option>
-              <option value="0.5">50%</option>
-              <option value="0.25">25%</option>
-              <option value="0.12">12%</option>
-            </select>
-          </div>
-          <div class="operation">
-            <button onclick="resize('-')" class="scaling_btns">-</button>
-            <input class="inpscale" id="scale-input" type="range" value="100" min="10" max="300"/>
-            <button onclick="resize('+')" class="scaling_btns">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="./js/script.js"></script>
-</body>
+        <span class="copyright">Web Paint by Nikolay Ashapatov</span>
+    </body>
 </html>
