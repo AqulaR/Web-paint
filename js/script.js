@@ -872,12 +872,12 @@ function open_palette() {
 
 canvas.addEventListener("touchstart", handleStart);
 canvas.addEventListener("touchmove", handleMove);
-canvas.addEventListener("touchend", handleEnd);
+// canvas.addEventListener("touchend", handleEnd);
 // canvas.addEventListener("touchcancel", handleCancel);
 
 canvasMask.addEventListener("touchstart", handleStart);
 canvasMask.addEventListener("touchmove", handleMove);
-canvasMask.addEventListener("touchend", handleEnd);
+// canvasMask.addEventListener("touchend", handleEnd);
 
 const ongoingTouches = [];
 
@@ -956,19 +956,6 @@ function handleMove(evt) {
     let touchPosY = (ongoingTouches[0].pageY - rect.top) / scale;
     
     if (idx >= 0) {
-      // console.log("sda");
-      // ctx.beginPath();
-      // ctx.moveTo(
-      //   (ongoingTouches[idx].pageX - rect.left) / scale,
-      //   (ongoingTouches[idx].pageY - rect.top) / scale
-      // );
-      // ctx.lineTo(
-      //   (touches[i].clientX - rect.left) / scale,
-      //   (touches[i].clientY - rect.top) / scale
-      // );
-      // ctx.lineWidth = size;
-      // ctx.strokeStyle = color;
-      // ctx.stroke();
 
       if (drawingT) {
         const w = (ongoingTouches[idx].pageX - rect.left) / scale - (touches[i].clientX - rect.left) / scale;
@@ -994,73 +981,6 @@ function handleMove(evt) {
             ctx.strokeStyle = color;
             ctx.globalAlpha = 1;
             break;
-          // case TOOLS.LINE:
-          //   // console.log("sda");
-          //   ctxMask.strokeStyle = color;
-          //   ctxMask.beginPath();
-          //   console.log("lineTo:", touchPosX, touchPosY);
-          //   console.log("moveTo:", (ongoingTouches[idx].pageX - rect.left) / scale, (ongoingTouches[idx].pageY - rect.top) / scale);
-          //   ctxMask.lineTo((ongoingTouches[idx].pageX - rect.left) / scale, (ongoingTouches[idx].pageY - rect.top) / scale);
-          //   ctxMask.moveTo((touches[i].clientX - rect.left) / scale, (touches[i].clientY - rect.top) / scale);
-          //   ctxMask.stroke();
-          //   ctxMask.closePath();
-          //   break;
-          // case TOOLS.SQUARE:
-          //   ctxMask.strokeStyle = color;
-          //   ctxMask.strokeRect(mousePos.xDown, mousePos.yDown, w, h);
-          //   break;
-          // case TOOLS.CIRCLE:
-          //   ctxMask.strokeStyle = color;
-          //   ctxMask.beginPath();
-          //   ctxMask.ellipse(
-          //     mousePos.xDown + w / 2,
-          //     mousePos.yDown + h / 2,
-          //     Math.abs(w / 2),
-          //     Math.abs(h / 2),
-          //     0,
-          //     0,
-          //     Math.PI * 2
-          //   );
-          //   ctxMask.stroke();
-          //   ctxMask.closePath();
-          //   break;
-          // case TOOLS.SQUAREF:
-          //   ctxMask.fillStyle = color;
-          //   ctxMask.fillRect(mousePos.xDown, mousePos.yDown, w, h);
-          //   break;
-          // case TOOLS.CIRCLEF:
-          //   ctxMask.fillStyle = color;
-          //   ctxMask.beginPath();
-          //   ctxMask.ellipse(
-          //     mousePos.xDown + w / 2,
-          //     mousePos.yDown + h / 2,
-          //     Math.abs(w / 2),
-          //     Math.abs(h / 2),
-          //     0,
-          //     0,
-          //     Math.PI * 2
-          //   );
-          //   ctxMask.fill();
-          //   ctxMask.closePath();
-          //   break;
-          // case TOOLS.TRIANGLE:
-          //   ctxMask.strokeStyle = color;
-          //   ctxMask.beginPath();
-          //   ctxMask.moveTo(mousePos.xDown, mousePos.yDown);
-          //   ctxMask.lineTo(mousePos.x, mousePos.y);
-          //   ctxMask.lineTo(mousePos.xDown * 2 - mousePos.x, mousePos.y);
-          //   ctxMask.closePath();
-          //   ctxMask.stroke();
-          //   break;
-          // case TOOLS.TRIANGLEF:
-          //   ctxMask.fillStyle = color;
-          //   ctxMask.beginPath();
-          //   ctxMask.moveTo(mousePos.xDown, mousePos.yDown);
-          //   ctxMask.lineTo(mousePos.x, mousePos.y);
-          //   ctxMask.lineTo(mousePos.xDown * 2 - mousePos.x, mousePos.y);
-          //   ctxMask.closePath();
-          //   ctxMask.fill();
-          //   break;
         }
       }
     } else {
@@ -1070,53 +990,6 @@ function handleMove(evt) {
   }
 }
 
-function handleEnd(evt) {
-  evt.preventDefault();
-  // log("touchend");
-  // const el = document.getElementById("canvas");
-  // const ctx = el.getContext("2d");
-  const touches = evt.changedTouches;
-
-  // for (let i = 0; i < touches.length; i++) {
-  //   // const color = colorForTouch(touches[i]);
-  //   let idx = ongoingTouchIndexById(touches[i].identifier);
-
-  //   if (idx >= 0) {
-  //     // ctx.lineWidth = size;
-  //     ctx.fillStyle = color;
-  //     ctx.beginPath();
-  //     ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-  //     ctx.lineTo(touches[i].pageX, touches[i].pageY);
-  //     ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8); // and a square at the end
-  //     ongoingTouches.splice(idx, 1); // remove it; we're done
-
-  //   } else {
-  //     log("can't figure out which touch to end");
-  //   }
-  // }
-}
-
-function handleCancel(evt) {
-  evt.preventDefault();
-  log("touchcancel.");
-  const touches = evt.changedTouches;
-
-  for (let i = 0; i < touches.length; i++) {
-    let idx = ongoingTouchIndexById(touches[i].identifier);
-    ongoingTouches.splice(idx, 1); // remove it; we're done
-  }
-}
-
-// function colorForTouch(touch) {
-//   let r = touch.identifier % 16;
-//   let g = Math.floor(touch.identifier / 3) % 16;
-//   let b = Math.floor(touch.identifier / 7) % 16;
-//   r = r.toString(16); // make it a hex digit
-//   g = g.toString(16); // make it a hex digit
-//   b = b.toString(16); // make it a hex digit
-//   const color = `#${r}${g}${b}`;
-//   return color;
-// }
 
 function copyTouch({ identifier, pageX, pageY }) {
   return { identifier, pageX, pageY };
@@ -1130,11 +1003,9 @@ function ongoingTouchIndexById(idToFind) {
       return i;
     }
   }
-  return -1; // not found
+  return -1;
 }
 
 function log(msg) {
-  // const container = document.getElementById("log");
-  // container.textContent = `${msg} \n${container.textContent}`;
-  // console.log(msg);
+  console.log(msg);
 }

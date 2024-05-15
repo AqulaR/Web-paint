@@ -485,11 +485,11 @@ input[type=number] {
     left: 120px;
   }
   
-  .tool-bar-bottom {
+  /* .tool-bar-bottom { */
     /* flex-direction: column-reverse; */
     /* justify-content: center; */
     /* align-items: flex-end; */
-  }
+  /* } */
 
   .operation {
     display: flex;
